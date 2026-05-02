@@ -140,15 +140,6 @@ const VistaColab = ({ onLogout }) => {
           )}
           {vista === "historial" && <HistorialGastosColab />}
         </div>
-      </div>
-    </div>
-  );
-            <svg width="44" height="44" fill="none" stroke="#fff" strokeWidth="2.5" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20"/><path d="M16 32h16M20 24h8"/></svg>
-            <svg width="44" height="44" fill="none" stroke="#fff" strokeWidth="2.5" viewBox="0 0 48 48"><path d="M12 40l12-28 12 28"/><path d="M20 32h8"/></svg>
-            <svg width="44" height="44" fill="none" stroke="#fff" strokeWidth="2.5" viewBox="0 0 48 48"><ellipse cx="24" cy="32" rx="12" ry="6"/><path d="M12 32V20a12 6 0 0 1 24 0v12"/></svg>
-            <svg width="44" height="44" fill="none" stroke="#fff" strokeWidth="2.5" viewBox="0 0 48 48"><rect x="10" y="18" width="28" height="16" rx="8"/><path d="M24 18v-4"/></svg>
-          </div>
-        </div>
         {/* Contenido principal */}
         <div style={{ padding: 32, background: "#f8fafc" }}>
           <div style={{ textAlign: "center", color: "#444", fontSize: 18, marginBottom: 18 }}>
