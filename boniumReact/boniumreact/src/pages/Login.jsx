@@ -1,28 +1,44 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 // Login solo con documento y contraseña, validando contra localStorage
 
 
 const Login = ({ onLogin }) => {
+	const navigate = useNavigate();
 	const [documento, setDocumento] = useState("");
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setError("");
-		const usuarios = JSON.parse(localStorage.getItem("usuariosBonium") || "[]");
-		const user = usuarios.find(u => u.documento === documento && u.password === password);
-		if (!user) {
-			setError("Documento o contraseña incorrectos");
-			return;
+		
+		try {
+			const res = await fetch("http://localhost:8080/auth/login", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ username: documento, password })
+			});
+
+			if (!res.ok) {
+				setError("Usuario o contraseña incorrectos");
+				return;
+			}
+
+			const user = await res.json();
+			// user tiene el formato { username: "...", role: "..." }
+			
+			sessionStorage.setItem("authUser", user.username);
+			sessionStorage.setItem("authRole", user.role);
+			if (onLogin) onLogin(user);
+			navigate(`/${user.role}`);
+		} catch (err) {
+			console.error(err);
+			setError("Error al conectar con el servidor");
 		}
-		// Guardar usuario en sessionStorage
-		sessionStorage.setItem("authUser", user.documento);
-		sessionStorage.setItem("authRole", user.rol || "usuario");
-		if (onLogin) onLogin({ ...user, role: user.rol || "usuario" });
 	};
 
 	return (
